@@ -23,7 +23,7 @@ bubble(meuse, "zinc") #bubble is to make use of size of concentration rather tha
 bubble(meuse, "zinc", main="Zinc cocnentration")
 
 # Excercise: bubble copper in red
-bubble(meuse, "copper", col="red", main="Copper cocnentration")
+bubble(meuse, "copper", col="red", main="Copper concentration")
 
 #### importing new data
 
@@ -59,3 +59,33 @@ install.packages("ggplot2")
 library(ggplot2) #another function is require(ggplot2) #library is to say we want to use it
 
 # save the .Rdata under the menu file
+
+# load previously saved .RData
+# Setting the working directory:lab
+#Windows
+setwd("c:/lab/")
+# Mac
+setwd("/Users/roxanechenmintao/lab/")
+#Linux users
+setwd("~/lab")
+
+load("test 1")
+
+ls() # means 'list' this shows all the data that was made
+# covid
+
+install.packages(ggplot2)
+library(ggplot2) #require(ggplot2)
+
+data(mpg)
+head(mpg)
+# key components: data, aesthetics, geometry # geometry is a seperate file
+ggplot(mpg,aes(x=displ,y=hwy)) + geom_point() #need the () for all the functions
+ggplot(mpg,aes(x=displ,y=hwy)) + geom_line()
+ggplot(mpg,aes(x=displ,y=hwy)) + geom_polygon()
+
+head(covid)
+ggplot(covid, aes(x=lon, y=lat, size=cases))+geom_point() #size of point will be according to cases
+
+
+
