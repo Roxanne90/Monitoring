@@ -16,7 +16,7 @@ levelplot(copNDVI)
 
 setwd(Users/roxanechenmintao/lab)
  
-faPAR10 <- raster("faPAR10.tif")
+faPAR10 <- raster("view.php.tif")
 
 levelplot(faPAR10)
  
@@ -31,4 +31,4 @@ levelplot(faPAR10)
 dev.off()
 
  
- 
+
