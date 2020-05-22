@@ -56,9 +56,37 @@ hm<- c(30, 100, 150,200, 260, 340, 460, 600)  #hm=heavy metals and its in ppm
 plot(erosion, hm, col="red", pch=19, xlab="erosion", ylab="heavy metals")
 
 
+model1 <- lm(hm ~ erosion)
+abline(model1)
+
+setwd("~/lab/")
+
+faPAR10 <- raster("~/lab/faPAR10.tif")
+
+library(raster)
+faPAR10 <- raster("~/lab/faPAR10.tif")
+library(rasterdiv)
+ 
 
 
+copNDVI <- reclassify(copNDVI, cbind(253:255, NA), right=TRUE)
+library(sf) # to call st_* functions
+random.points <- function(x,n)
 
+pts <- random.points(faPAR10,1000)
+
+pts <- random.points(faPAR10,1000)
+copNDVIp <- extract(copNDVI, pts)
+faPAR10p <- extract(faPAR10,pts)
+
+copNDVI <- reclassify(copNDVI, cbind(253:255, NA), right=TRUE)
+
+copNDVIp <- extract(copNDVI, pts)
+
+model2 <- lm(faPAR10p ~ copNDVIp)
+
+plot(copNDVIp, faPAR10p, col="green", xlab="biomass", ylab="photosynthesis")
+abline(model2, col="red")
 
 
 
