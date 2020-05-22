@@ -48,3 +48,18 @@ writeRaster(copNDVI, "copNDVI.tif")
 faPAR10 <- raster("copNDVI.tif")
 levelplot(faPAR10)
 
+
+###### regression model between faPAR and NDVI
+erosion<- c(12,14,16,24,26,40,55,67)
+hm<- c(30, 100, 150,200, 260, 340, 460, 600)  #hm=heavy metals and its in ppm
+
+plot(erosion, hm, col="red", pch=19, xlab="erosion", ylab="heavy metals")
+
+
+
+
+
+
+
+
+
