@@ -49,9 +49,47 @@ library(rgdal)
 
 source("prediction.r") # file is in snow folder and the function source will run the code within the file
 
+plot(predicted.snow.2025.norm, col=cl)
+     
+    
+###########################     
+## Day 2
 
+setwd("/Users/roxanechenmintao/lab/snow/") 
 
+# Excercise: import the snow cover images altogether
 
+rlist <- list.files(pattern="snow")
+import<- lapply(rlist, raster) 
+snow.multitemp<- stack(import) 
+cl <- colorRampPalette(c('darkblue','blue','light blue'))(100) 
+plot(snow.multitemp, col=cl)
 
+# load("snow.RData")
+
+prediction<- raster("predicted.snow.2025.norm.tif")
+
+plot(prediction, col=cl)
+
+# export the output
+# you made the calculation and you want to send the output to a colleague
+
+writeRaster(prediction,"final.tif") #writeRaster function makes it into a file you choose + title in "" 
+
+#final stack altogether
+
+final.stack<- stack(snow.multitemp, prediction) # stack of snow images + the prediction = 6 images in total
+
+plot(final.stack, col=cl)
+
+# export the R graph for your beautiful thesis! 
+
+pdf("my_final_exciting_graph.pdf")
+plot(final.stack, col=cl)
+dev.off() # very important!!! Need to close the window to open the pdf
+
+png("my_final_exciting_graph.png")
+plot(final.stack, col=cl)
+dev.off()
 
 
