@@ -296,6 +296,8 @@ cldif <- colorRampPalette(c('blue','black','yellow'))(100) #
 
 plot(difpca$PC1,col=cldif)
 
+###############################################################
+###############################################################
 # R_code_rs.r
 # R code for remote sensing analysis
 
