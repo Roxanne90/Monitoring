@@ -16,6 +16,7 @@
 # 15. R_code_crop.r 
 # 16. R_code_interpolation.r
 # 17. R_code_EBVs.r
+# 18. R_code_project.r
 
 #####################################################
 #####################################################
@@ -1254,4 +1255,55 @@ plotRGB(clad, 1,2,3, stretch="lin")
 plot(sd_clad, col=cl)
 # plot(sd_clad_agg, col=cl)
 
+##############################################
+##############################################
+
+#R_code_project.r
+
+setwd("/Users/roxanechenmintao/lab/albedo/")
+library(raster)
+library(ncdf4)
+library(rgdal)
+albedo2016<-raster("c_gls_ALDH_QL_201601240000_GLOBE_PROBAV_V1.5.1.tiff")
+albedo2017<-raster("c_gls_ALDH_QL_201701240000_GLOBE_PROBAV_V1.5.1.tiff")
+albedo2018<-raster("c_gls_ALDH_QL_201801240000_GLOBE_PROBAV_V1.5.1.tiff")
+albedo2019<-raster("c_gls_ALDH_QL_201901240000_GLOBE_PROBAV_V1.5.1.tiff")
+albedo2020<-raster("c_gls_ALDH_QL_202001240000_GLOBE_PROBAV_V1.5.1.tiff")
+par(mfrow=c(2,3))
+cl<-colorRampPalette(c("dark green","green","beige", "orange", "yellow"))(100)
+plot(albedo2016, col=cl)
+plot(albedo2017, col=cl)
+plot(albedo2018, col=cl)
+plot(albedo2019, col=cl)
+plot(albedo2020, col=cl)
+ALBEDO2016<-plot(albedo2016, col=cl, main="Albedo 2016")
+ALBEDO2017<-plot(albedo2017, col=cl, main="Albedo 2017")
+ALBEDO2018<-plot(albedo2018, col=cl, main="Albedo 2018")
+ALBEDO2019<-plot(albedo2019, col=cl, main="Albedo 2019")
+ALBEDO2020<-plot(albedo2020, col=cl, main="Albedo 2020")
+
+
+albedolist<-list.files(pattern="c_gls_ALDH_QL")
+albedolist
+import<-lapply(albedolist, raster)
+albedo.multitemp<-stack(import)
+plot(albedo.multitemp, col=cl)
+
+albedo.multitemp
+ext<-c(-180, 180, -90, 90) 
+extension<-crop(albedo.multitemp,ext)
+time<-1:nlayers(albedo.multitemp)
+fun<-function(x) { if (is.na(x[1])){ NA } else {lm(x ~ time)$coefficients[2] }} 
+
+predicted.albedo.2021<-calc(extension, fun)
+plot(predicted.albedo.2021, col=cl)
+final.stack<-stack(albedo.multitemp, predicted.albedo.2021)
+plot(final.stack, col=cl)
+png("final_plot_albedo.png")
+plot(final.stack, col=cl)
+dev.off()
+
+
+
 ### too cool for school ###
+
